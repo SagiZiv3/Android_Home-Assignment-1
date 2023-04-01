@@ -1,5 +1,8 @@
 package com.example.android_homeassignment1;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class BoardController {
     private final BoardElement[][] boardStatus;
     private int carColumn;
@@ -9,18 +12,25 @@ public class BoardController {
         this.boardStatus = new BoardElement[numRows][numColumns];
     }
 
-    public void updateBoard() {
+    public void reset() {
+        for (BoardElement[] row : boardStatus) {
+            Arrays.fill(row, BoardElement.None);
+        }
+    }
+
+    public boolean updateBoard() {
+        boolean collisionOccurred = false;
         // For the last row, we can't move the obstacle down. We need to check collision with the car
         int row = boardStatus.length - 1;
         for (int column = 0; column < boardStatus[row].length; column++) {
             if (boardStatus[row][column] == BoardElement.None) continue;
             boardStatus[row][column] = BoardElement.None;
             if (column == carColumn) {
-                // TODO: 4/1/2023 Handle collision with car
+                collisionOccurred = true;
             }
         }
         // And move all obstacles one row down.
-        for (row = 0; row < boardStatus.length - 1; row++) {
+        for (row = boardStatus.length - 1; row >= 0; row--) {
             for (int column = 0; column < boardStatus[row].length; column++) {
                 if (boardStatus[row][column] == BoardElement.None) continue;
                 // Move the element down 1 row, and delete it from the current row.
@@ -28,6 +38,18 @@ public class BoardController {
                 boardStatus[row][column] = BoardElement.None;
             }
         }
+
+        return collisionOccurred;
+    }
+
+    public int addObstacle() {
+        int column = RandomUtils.getInstance().nextInt(boardStatus[0].length);
+        boardStatus[0][column] = BoardElement.Obstacle;
+        return column;
+    }
+
+    public BoardElement getElementAt(int row, int column) {
+        return boardStatus[row][column];
     }
 
     public int getCarColumn() {
@@ -35,12 +57,12 @@ public class BoardController {
     }
 
     public void moveCarLeft() {
-        if (carColumn <= 0) return;
+        if (carColumn == 0) return;
         carColumn--;
     }
 
     public void moveCarRight() {
-        if (carColumn >= boardStatus[0].length) return;
+        if (carColumn == boardStatus[0].length - 1) return;
         carColumn++;
     }
 }

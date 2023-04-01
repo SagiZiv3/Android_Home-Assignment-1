@@ -10,12 +10,13 @@ public class BoardUI {
 
     private final int numColumnsPerRow;
     private final boolean bottomRowIsInput;
-    private final ViewsCollection<ImageView> columnImages;
+    private final ViewsCollection<ImageView> columnImages, heartImages;
 
-    public BoardUI(int numColumnsPerRow, boolean bottomRowIsInput, ViewsCollection<ImageView> columnImages) {
+    public BoardUI(int numColumnsPerRow, boolean bottomRowIsInput, ViewsCollection<ImageView> columnImages, ViewsCollection<ImageView> heartImages) {
         this.numColumnsPerRow = numColumnsPerRow;
         this.bottomRowIsInput = bottomRowIsInput;
         this.columnImages = columnImages;
+        this.heartImages = heartImages;
     }
 
     public void drawBoard(@DrawableRes int obstacleImageId, @DrawableRes int carImageId) {
@@ -35,7 +36,19 @@ public class BoardUI {
         }
     }
 
-    public void hideAllObstacles(){
+    public void drawControlsRow(@DrawableRes int arrowIcon, boolean flipLeft){
+        if (!bottomRowIsInput) return;
+        int controlsIndex = getCarColumnIndex() + numColumnsPerRow + columnImages.getStartIndex();
+        columnImages.getView(controlsIndex).setImageResource(arrowIcon);
+        if (flipLeft)
+            columnImages.getView(controlsIndex).setScaleX(-1f);
+        columnImages.getView(controlsIndex+2).setImageResource(arrowIcon);
+        if (!flipLeft)
+            columnImages.getView(controlsIndex + 2).setScaleX(-1f);
+        columnImages.getView(controlsIndex+1).setVisibility(View.INVISIBLE);
+    }
+
+    public void hideAllObstacles() {
         int index = columnImages.getStartIndex();
         int endIndex = getCarColumnIndex();
 
@@ -46,13 +59,16 @@ public class BoardUI {
         }
     }
 
+    public void updateHealth(int health) {
+        heartImages.getView(health + heartImages.getStartIndex()).setVisibility(View.INVISIBLE);
+    }
+
     public int getNumRows() {
         return getCarColumnIndex() / numColumnsPerRow;
     }
 
     public void showObstacleAt(int row, int column) {
         int index = getIndexFrom2DPosition(row, column);
-        System.out.println(index);
         columnImages.getView(index).setVisibility(View.VISIBLE);
     }
 
