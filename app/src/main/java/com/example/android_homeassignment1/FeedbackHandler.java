@@ -14,8 +14,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public class FeedbackHandler {
-    private Context context;
-    private Vibrator vibrator;
+    private final Context context;
+    private final Vibrator vibrator;
 
 
     private static FeedbackHandler mySignal;
@@ -36,12 +36,12 @@ public class FeedbackHandler {
     }
 
 
-    public void vibrate() {
+    public void vibrate(long milliseconds) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             //deprecated in API 26
-            vibrator.vibrate(500);
+            vibrator.vibrate(milliseconds);
         }
     }
 

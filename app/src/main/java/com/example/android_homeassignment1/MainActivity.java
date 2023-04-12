@@ -57,8 +57,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addControllersListeners() {
-        columnImages.getView(columnImages.length() - 2).setOnClickListener(e -> boardManager.moveCarLeft());
-        columnImages.getView(columnImages.length()).setOnClickListener(e -> boardManager.moveCarRight());
+        columnImages.getView(columnImages.length() - 2)
+                .setOnClickListener(e -> {
+                    boardManager.moveCarLeft();
+                    FeedbackHandler.getInstance().vibrate(50);
+                });
+        columnImages.getView(columnImages.length())
+                .setOnClickListener(e -> {
+                    boardManager.moveCarRight();
+                    FeedbackHandler.getInstance().vibrate(50);
+                });
+
+        gameOverImage.setOnClickListener(e -> {
+            finish();
+            startActivity(getIntent());
+        });
     }
 
     @NonNull
@@ -76,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onCollision() {
         FeedbackHandler.getInstance().toast("💥 BOOM 💥", Toast.LENGTH_SHORT);
-        FeedbackHandler.getInstance().vibrate();
+        FeedbackHandler.getInstance().vibrate(500);
     }
 
     private void gameOver() {
