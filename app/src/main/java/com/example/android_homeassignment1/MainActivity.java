@@ -1,14 +1,15 @@
 package com.example.android_homeassignment1;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.reflect.Field;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +18,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewsCollection<ImageView> columnImages;
     private ViewsCollection<ImageView> heartImages;
+    private TextView countDownLabel;
     private MyTimer timer;
+    private ImageView gameOverImage;
+    private CountDownHandler countDownHandler;
     private BoardManager boardManager;
 
     @Override
@@ -32,8 +36,18 @@ public class MainActivity extends AppCompatActivity {
         boardController.reset();
         createGameManager(boardUI, boardController);
 
+
         timer = new MyTimer(150, boardManager::Tick);
+        countDownLabel = findViewById(R.id.main_LBL_countdown);
+        countDownHandler = new CountDownHandler(Integer.parseInt(countDownLabel.getText().toString()),
+                countDownLabel, this::startGame);
+//        countDownHandler.start();
         addControllersListeners();
+    }
+
+    private void startGame() {
+        timer.start();
+        countDownLabel.setVisibility(View.GONE);
     }
 
     private void createGameManager(BoardUI boardUI, BoardController boardController) {
@@ -43,12 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addControllersListeners() {
-        columnImages.getView(columnImages.length() - 2).setOnClickListener(e -> {
-            boardManager.moveCarLeft();
-        });
-        columnImages.getView(columnImages.length()).setOnClickListener(e -> {
-            boardManager.moveCarRight();
-        });
+        columnImages.getView(columnImages.length() - 2).setOnClickListener(e -> boardManager.moveCarLeft());
+        columnImages.getView(columnImages.length()).setOnClickListener(e -> boardManager.moveCarRight());
     }
 
     @NonNull
@@ -72,19 +82,29 @@ public class MainActivity extends AppCompatActivity {
     private void gameOver() {
         FeedbackHandler.getInstance().toast("! GAME OVER !", Toast.LENGTH_LONG);
         timer.stop();
+        gameOverImage.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (!boardManager.isGameOver())
-            timer.start();
+        if (boardManager.isGameOver()) return;
+        if (countDownHandler.isPaused())
+            countDownHandler.resume();
+        if (!countDownHandler.isRunning()) {
+            countDownHandler.start();
+            countDownLabel.setVisibility(View.VISIBLE);
+        }
+        System.out.println("Hello from tablet");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        timer.stop();
+        if (countDownHandler.isRunning())
+            countDownHandler.pause();
+        else
+            timer.stop();
     }
 
     @Override
@@ -107,5 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 fields,
                 Pattern.compile("main_IMG_column(\\d+)")
         );
+        gameOverImage = findViewById(R.id.main_IMG_gameover);
     }
 }

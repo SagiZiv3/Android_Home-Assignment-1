@@ -11,6 +11,10 @@ public class RandomUtils {
         random = new Random();
     }
 
+    public static void init(){
+        instance = new RandomUtils();
+    }
+
     public static RandomUtils getInstance() {
         return instance;
     }

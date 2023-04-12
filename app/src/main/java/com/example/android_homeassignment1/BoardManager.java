@@ -43,13 +43,17 @@ public class BoardManager {
         boardUI.hideAllObstacles();
         boolean collisionOccurred = boardController.updateBoard();
 
+        addAsteroidIfNeeded();
+        return collisionOccurred;
+    }
+
+    private void addAsteroidIfNeeded() {
         nextAsteroidCountdown--;
         if (nextAsteroidCountdown == 0) {
             nextAsteroidCountdown = RandomUtils.getInstance().nextInt(3, 6);
-            System.out.println("Adding asteroid in " + nextAsteroidCountdown + " ticks");
+//            System.out.println("Adding asteroid in " + nextAsteroidCountdown + " ticks");
             boardController.addObstacle();
         }
-        return collisionOccurred;
     }
 
     private void updateBoardUI() {
