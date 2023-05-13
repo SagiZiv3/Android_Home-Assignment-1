@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">Android - Home Assignment 1</string>
+    <string name="app_name">Car Game</string>
+    <string name="coins">Coins:</string>
+    <string name="distance">Distance:</string>
+    <string name="welcome">Welcome to game</string>
+    <string name="name_input">Enter your name</string>
+    <string name="input_type">Select input type:</string>
+    <string name="play_speed">Select play speed:</string>
+    <string name="buttons_input">Buttons</string>
+    <string name="sensor_input">Sensor</string>
+    <string name="fast_play_mode">Fast</string>
+    <string name="slow_play_mode">Slow</string>
+    <string name="start_game">Let\'s play</string>
+    <string name="high_scores">High scores</string>
+    <string name="collision">BOOM</string>
+    <string name="coin_collected">Coin collected</string>
+    <string name="game_over">GAME OVER</string>
+    <string name="unable_to_locate">Unable to locate you</string>
+    <string name="cancel">Cancel</string>
+    <string name="enable_gps_button">Enable PGS</string>
+    <string name="enable_gps_prompt">Please enable GPS to access your location</string>
+    <string name="gps_warning">You must turn on your GPS</string>
+    <string name="permissions_denied">Permissions denied</string>
+    <string name="empty_high_scores_table">High Scores table is empty</string>
+    <string name="name_too_short_error">Name can\'t be less than 2 characters</string>
 </resources>

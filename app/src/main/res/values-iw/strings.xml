@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">משחק מכונית</string>
+    <string name="coins">מטבעות:</string>
+    <string name="distance">מרחק:</string>
+    <string name="welcome">ברוכים הבאים למשחק</string>
+    <string name="name_input">הכניסו שם:</string>
+    <string name="input_type">בחרו סוג קלט:</string>
+    <string name="play_speed">בחרו מהירות משחק:</string>
+    <string name="buttons_input">כפתורים</string>
+    <string name="sensor_input">חיישן</string>
+    <string name="fast_play_mode">מהיר</string>
+    <string name="slow_play_mode">איטי</string>
+    <string name="start_game">התחל משחק</string>
+    <string name="high_scores">טבלת שיאים</string>
+    <string name="collision">בום</string>
+    <string name="coin_collected">מטבע נאסף</string>
+    <string name="game_over">משחק נגמר</string>
+    <string name="unable_to_locate">לא ניתן לאתר אתכם</string>
+    <string name="cancel">ביטול</string>
+    <string name="enable_gps_button">הפעל GPS</string>
+    <string name="enable_gps_prompt">בבקשה הפעילו GPS על מנת לאתר אתכם</string>
+    <string name="gps_warning">חובה עליכם להפעיל את ה-GPS</string>
+    <string name="permissions_denied">הרשאות נדחו</string>
+    <string name="empty_high_scores_table">טבלת השיאים ריקה</string>
+    <string name="name_too_short_error">שם לא יכול להיות פחות משני תווים</string>
+</resources>
